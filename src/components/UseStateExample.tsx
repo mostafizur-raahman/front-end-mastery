@@ -1,23 +1,40 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 const UseStateExample = () => {
-    const [counter, setCounter] = useState(0);
+    const [user, setUser] = useState({ name: "", email: "" });
 
-    const handleIncrement = () => {
-        // increment by 3 but increment by 1
-        setCounter(counter + 1);
-        setCounter(counter + 1);
-        setCounter(counter + 1);
+    const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log(user);
+    };
 
-        // solution
-        setCounter((pre) => pre + 1);
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const inputName = e.target.name;
+        const value = e.target.value;
+
+        // setUser({ ...user, name: e.target.value });
+        // setUser({ ...user, name: e.target.value });
+
+        // now dynamic
+        setUser({ ...user, [inputName]: value });
     };
     return (
         <div>
-            <h1>{counter}</h1>
-            <button onClick={handleIncrement}>Increment</button>
-            <button onClick={() => setCounter(counter - 1)}>Decrement</button>
-            <button onClick={() => setCounter(0)}>Reset</button>
+            <form onSubmit={handleSubmit}>
+                <input
+                    onChange={handleInputChange}
+                    type="text"
+                    name="name"
+                    id="name"
+                />
+                <input
+                    onChange={handleInputChange}
+                    type="text"
+                    name="email"
+                    id="email"
+                />
+                <button type="submit">submit</button>
+            </form>
         </div>
     );
 };
